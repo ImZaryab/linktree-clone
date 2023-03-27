@@ -3,7 +3,8 @@ import Image from "next/image";
 import { get } from '@vercel/edge-config';
 import { redirect } from "next/navigation";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic',
+  runtime = 'edge';
 
 function LinkCard({
   title,
@@ -79,7 +80,7 @@ export default async function HomePage(){
         {data.links.map((link:any) => (
           <LinkCard key={link.href} {...link} />
         ))}
-        <div className="flex items-center gap-1 mt-4">
+        {/* <div className="flex items-center gap-1 mt-4">
           {data.socials.map((social:any) => {
             if (social.href.includes("twitter")) {
               return (
@@ -114,7 +115,7 @@ export default async function HomePage(){
               );
             }
           })}
-        </div>
+        </div> */}
       </div>
     </div>
   );

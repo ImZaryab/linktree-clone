@@ -1,6 +1,9 @@
 # Linktree Clone
 
-# Next.js + Tailwind CSS Example
+# Vercel Edge Config
+This example uses Vercel Edge Config to fetch data in the form of JSON stored on the edge. This allows dynamic data fetching on every 
+render which is easy to update or change.
+# Next.js + Tailwind CSS + Vercel Edge Config
 
 This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.2)](https://tailwindcss.com/blog/tailwindcss-v3-2) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
 

@@ -1,6 +1,9 @@
 import type { NextPage } from "next";
 import Image from "next/image";
-import data from "../data.json";
+import { get } from '@vercel/edge-config';
+import { redirect } from "next/navigation";
+
+export const dynamic = 'force-dynamic';
 
 function LinkCard({
   title,
@@ -23,8 +26,8 @@ function LinkCard({
           {image && (
             <Image
               className="rounded-sm border-2 border-black"
-              alt={data.name}
-              src={data.avatar}
+              alt={title}
+              src={image}
               width={48}
               height={48}
             />
@@ -38,7 +41,28 @@ function LinkCard({
   );
 }
 
-const Home: NextPage = () => {
+interface Data {
+  name: string,
+  avatar: string,
+  links: Link[],
+  socials: Social[],
+}
+
+interface Link {
+  href: string,
+  title: string,
+  image?: string,
+}
+
+interface Social {
+  href: string,
+}
+
+export default async function HomePage(){
+  const data:any = await get('linktree');
+  if(!data){
+    redirect('https://google.com');
+  }
   return (
     <div className="w-full min-h-screen bg-gradient-to-t from-gray-900 to-gray-600 bg-gradient-to-r pt-16">
       <div className="flex flex-col justify-center items-center mx-auto w-full px-8">
@@ -52,14 +76,15 @@ const Home: NextPage = () => {
         <h1 className="font-semibold text-slate-100 mt-4 text-xl mb-4">
           @{data.name}
         </h1>
-        {data.links.map((link) => (
+        {data.links.map((link:any) => (
           <LinkCard key={link.href} {...link} />
         ))}
         <div className="flex items-center gap-1 mt-4">
-          {data.socials.map((social) => {
+          {data.socials.map((social:any) => {
             if (social.href.includes("twitter")) {
               return (
                 <svg
+                  key={social.href}
                   role="img"
                   viewBox="0 0 24 24"
                   width="30"
@@ -75,6 +100,7 @@ const Home: NextPage = () => {
             if (social.href.includes("github")) {
               return (
                 <svg
+                  key={social.href}
                   height="30"
                   width="30"
                   className="fill-white"
@@ -93,5 +119,3 @@ const Home: NextPage = () => {
     </div>
   );
 };
-
-export default Home;

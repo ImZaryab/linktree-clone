@@ -1,23 +1,40 @@
 import type { NextPage } from "next";
 import Image from "next/image";
-import { get } from '@vercel/edge-config';
+import { get } from "@vercel/edge-config";
 import { redirect } from "next/navigation";
 
-export const dynamic = 'force-dynamic',
-  runtime = 'edge';
+export const dynamic = "force-dynamic",
+  runtime = "edge";
+
+function Section({ title }: { title?: string }) {
+  return (
+    <div
+      className="flex p-1 mt-4 rounded-sm shadow-xl
+                  transition-shadow duration-150 w-full bg-black 
+                  max-w-2xl text-slate-100"
+    >
+      <div className="flex items-center w-full">
+        <div className="w-12 h-12"></div>
+        <h2 className="font-normal text-lg w-full text-center -ml-10">
+          {title ?? ""}
+        </h2>
+      </div>
+    </div>
+  );
+}
 
 function LinkCard({
   title,
   href,
   image,
 }: {
-  title: string;
-  href: string;
+  title?: string;
+  href?: string;
   image?: string;
 }) {
   return (
     <a
-      href={href}
+      href={href ?? "#"}
       className="flex p-1 mt-4 rounded-sm shadow-lg hover:shadow-xl
                   transition-shadow duration-150 w-full bg-white 
                   hover:scale-105 transition-all max-w-2xl"
@@ -27,7 +44,7 @@ function LinkCard({
           {image && (
             <Image
               className="rounded-sm border-2 border-black"
-              alt={title}
+              alt={title ?? ""}
               src={image}
               width={48}
               height={48}
@@ -35,7 +52,7 @@ function LinkCard({
           )}
         </div>
         <h2 className="font-normal text-lg w-full text-center -ml-10">
-          {title}
+          {title ?? ""}
         </h2>
       </div>
     </a>
@@ -43,30 +60,30 @@ function LinkCard({
 }
 
 interface Data {
-  name: string,
-  avatar: string,
-  links: Link[],
-  socials: Social[],
+  name: string;
+  avatar: string;
+  links: Link[];
+  socials: Social[];
 }
 
 interface Link {
-  href: string,
-  title: string,
-  image?: string,
+  href: string;
+  title: string;
+  image?: string;
 }
 
 interface Social {
-  href: string,
+  href: string;
 }
 
-export default async function HomePage(){
-  const data:any = await get('linktree');
-  if(!data){
-    redirect('https://google.com');
+export default async function HomePage() {
+  const data: any = await get("linktree");
+  if (!data) {
+    redirect("https://google.com");
   }
   return (
     <div className="w-full min-h-screen bg-gradient-to-t from-gray-900 to-gray-600 bg-gradient-to-r pt-16">
-      <div className="flex flex-col justify-center items-center mx-auto w-full px-8">
+      <div className="flex flex-col justify-center items-center mx-auto w-full px-8 pb-8">
         <Image
           className="rounded-full border-slate-100 border-2"
           alt={data.name}
@@ -77,9 +94,17 @@ export default async function HomePage(){
         <h1 className="font-semibold text-slate-100 mt-4 text-xl mb-4">
           @{data.name}
         </h1>
-        {data.links.map((link:any) => (
+        {/* Work & Socials Section */}
+        <Section title="Work & Socials"/>
+        {data.links.map((link: any) => (
           <LinkCard key={link.href} {...link} />
         ))}
+        {/* Projects Section */}
+        <Section title="Projects"/>
+        {data.projects.map((link: any) => (
+          <LinkCard key={link.href} {...link} />
+        ))}
+        {/* Social Icons */}
         {/* <div className="flex items-center gap-1 mt-4">
           {data.socials.map((social:any) => {
             if (social.href.includes("twitter")) {
@@ -119,4 +144,4 @@ export default async function HomePage(){
       </div>
     </div>
   );
-};
+}

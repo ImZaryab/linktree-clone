@@ -83,7 +83,7 @@ export default async function HomePage() {
   }
   return (
     <div className="w-full min-h-screen bg-gradient-to-t from-gray-900 to-gray-600 bg-gradient-to-r pt-16">
-      <div className="flex flex-col justify-center items-center mx-auto w-full px-8 pb-8">
+      <div className="flex flex-col justify-center items-center mx-auto w-full px-8 pb-24">
         <Image
           className="rounded-full border-slate-100 border-2"
           alt={data.name}

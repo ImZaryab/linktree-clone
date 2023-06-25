@@ -2,6 +2,12 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import { get } from "@vercel/edge-config";
 import { redirect } from "next/navigation";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../@/components/ui/accordion";
 
 export const dynamic = "force-dynamic",
   runtime = "edge";
@@ -23,7 +29,7 @@ function Section({ title }: { title?: string }) {
   );
 }
 
-function LinkCard({
+function SocialLinkCard({
   title,
   href,
   image,
@@ -35,6 +41,7 @@ function LinkCard({
   return (
     <a
       href={href ?? "#"}
+      target="_blank"
       className="flex p-1 mt-4 rounded-sm shadow-lg hover:shadow-xl
                   transition-shadow duration-150 w-full bg-white 
                   hover:scale-105 transition-all max-w-2xl"
@@ -56,6 +63,62 @@ function LinkCard({
         </h2>
       </div>
     </a>
+  );
+}
+
+function ProjectLinkCard({
+  title,
+  href,
+  description,
+  image,
+  accordianValue,
+}: {
+  title?: string;
+  description?: string;
+  href?: string;
+  image?: string;
+  accordianValue?: string;
+}) {
+  return (
+    <div className="w-full max-w-2xl flex items-center justify-center mt-4">
+      <Accordion
+        className="w-full flex justify-center items-center bg-white min-h-[3rem] rounded-sm"
+        type="single"
+        collapsible
+      >
+        <AccordionItem className="w-full" value={accordianValue || ""}>
+          <AccordionTrigger className="w-full flex justify-center items-center gap-2">
+            <h1 className="font-normal text-lg">{title ?? ""}</h1>
+          </AccordionTrigger>
+          <AccordionContent>
+              <p className="w-full p-2 text-base border-t-2 border-black border-dotted">
+                <b>Description: </b>
+                { description ?? "" }
+                {" "}
+              </p>
+            <div className="pt-2 pb-3 flex gap-4 justify-center items-center">
+                <a
+                  href={href ?? "#"}
+                  target="_blank"
+                  style={{ pointerEvents: "none" }}
+                  className="inline-block max-w-max px-8 py-4 bg-gray-800 text-gray-600 rounded-lg"
+                >
+                  <button disabled>
+                  Github Repo
+                  </button>
+                </a>
+              <a
+                href={href ?? "#"}
+                target="_blank"
+                className="inline-block max-w-max px-8 py-4 bg-black text-white rounded-lg"
+              >
+                Live Demo
+              </a>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </div>
   );
 }
 
@@ -95,14 +158,14 @@ export default async function HomePage() {
           @{data.name}
         </h1>
         {/* Work & Socials Section */}
-        <Section title="Work & Socials"/>
+        <Section title="Work & Socials" />
         {data.links.map((link: any) => (
-          <LinkCard key={link.href} {...link} />
+          <SocialLinkCard key={link.href} {...link} />
         ))}
         {/* Projects Section */}
-        <Section title="Projects"/>
+        <Section title="Projects" />
         {data.projects.map((link: any) => (
-          <LinkCard key={link.href} {...link} />
+          <ProjectLinkCard key={link.href} {...link} />
         ))}
         {/* Social Icons */}
         {/* <div className="flex items-center gap-1 mt-4">

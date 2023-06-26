@@ -96,7 +96,7 @@ function ProjectLinkCard({
                 { description ?? "" }
                 {" "}
               </p>
-            <div className="pt-2 pb-3 flex gap-4 justify-center items-center">
+            <div className="pt-2 pb-4 flex gap-4 justify-center items-center">
                 <a
                   href={href ?? "#"}
                   target="_blank"

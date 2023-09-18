@@ -76,7 +76,7 @@ function ProjectLinkCard({
 }: {
   title?: string;
   description?: string;
-  githubRepo?: string | "";
+  githubRepo?: string;
   href?: string;
   image?: string;
   accordianValue?: string;
@@ -99,9 +99,9 @@ function ProjectLinkCard({
             </p>
             <div className="pt-2 pb-4 flex gap-4 justify-center items-center">
               <a
-                href={githubRepo ?? "#"}
+                href={githubRepo}
                 target="_blank"
-                className="inline-block max-w-max px-8 py-4 bg-black text-white rounded-lg"
+                className={` ${githubRepo == "" ? "bg-slate-800 text-slate-500 pointer-events-none" : "bg-black text-white"} inline-block max-w-max px-8 py-4 rounded-lg`}
               >
                 <button disabled={githubRepo == ""}>Github Repo</button>
               </a>
@@ -133,6 +133,14 @@ interface Link {
   image?: string;
 }
 
+interface Project {
+  title: string;
+  description: string;
+  githubRepo: string;
+  href: string;
+  accordianValue: string;
+}
+
 interface Social {
   href: string;
 }
@@ -162,8 +170,8 @@ export default async function HomePage() {
         ))}
         {/* Projects Section */}
         <Section title="Projects" />
-        {data.projects.map((link: any) => (
-          <ProjectLinkCard key={link.href} {...link} />
+        {data.projects.map((project: Project) => (
+          <ProjectLinkCard key={project.href} {...project} />
         ))}
         {/* Social Icons */}
         {/* <div className="flex items-center gap-1 mt-4">

@@ -70,11 +70,13 @@ function ProjectLinkCard({
   title,
   href,
   description,
+  githubRepo,
   image,
   accordianValue,
 }: {
   title?: string;
   description?: string;
+  githubRepo?: string | "";
   href?: string;
   image?: string;
   accordianValue?: string;
@@ -91,22 +93,18 @@ function ProjectLinkCard({
             <h1 className="font-normal text-lg">{title ?? ""}</h1>
           </AccordionTrigger>
           <AccordionContent>
-              <p className="w-full p-2 text-base border-t-2 border-black border-dotted">
-                <b>Description: </b>
-                { description ?? "" }
-                {" "}
-              </p>
+            <p className="w-full p-2 text-base border-t-2 border-black border-dotted">
+              <b>Description: </b>
+              {description ?? ""}{" "}
+            </p>
             <div className="pt-2 pb-4 flex gap-4 justify-center items-center">
-                <a
-                  href={href ?? "#"}
-                  target="_blank"
-                  style={{ pointerEvents: "none" }}
-                  className="inline-block max-w-max px-8 py-4 bg-gray-800 text-gray-600 rounded-lg"
-                >
-                  <button disabled>
-                  Github Repo
-                  </button>
-                </a>
+              <a
+                href={githubRepo ?? "#"}
+                target="_blank"
+                className="inline-block max-w-max px-8 py-4 bg-black text-white rounded-lg"
+              >
+                <button disabled={githubRepo == ""}>Github Repo</button>
+              </a>
               <a
                 href={href ?? "#"}
                 target="_blank"

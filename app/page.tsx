@@ -101,7 +101,11 @@ function ProjectLinkCard({
               <a
                 href={githubRepo}
                 target="_blank"
-                className={` ${githubRepo == "" ? "bg-slate-800 text-slate-500 pointer-events-none" : "bg-black text-white"} inline-block max-w-max px-8 py-4 rounded-lg`}
+                className={` ${
+                  githubRepo == ""
+                    ? "bg-slate-800 text-slate-500 pointer-events-none"
+                    : "bg-black text-white"
+                } inline-block max-w-max px-8 py-4 rounded-lg`}
               >
                 <button disabled={githubRepo == ""}>Github Repo</button>
               </a>
@@ -151,30 +155,36 @@ export default async function HomePage() {
     redirect("https://google.com");
   }
   return (
-    <div className="w-full min-h-screen bg-gradient-to-t from-gray-900 to-gray-600 bg-gradient-to-r pt-16">
-      <div className="flex flex-col justify-center items-center mx-auto w-full px-8 pb-24">
-        <Image
-          className="rounded-full border-slate-100 border-2"
-          alt={data.name}
-          src={data.avatar}
-          width={96}
-          height={96}
-        />
-        <h1 className="font-semibold text-slate-100 mt-4 text-xl mb-4">
-          @{data.name}
-        </h1>
-        {/* Work & Socials Section */}
-        <Section title="Work & Socials" />
-        {data.links.map((link: any) => (
-          <SocialLinkCard key={link.href} {...link} />
-        ))}
-        {/* Projects Section */}
-        <Section title="Projects" />
-        {data.projects.map((project: Project) => (
-          <ProjectLinkCard key={project.href} {...project} />
-        ))}
-        {/* Social Icons */}
-        {/* <div className="flex items-center gap-1 mt-4">
+    <>
+      <div className="absolute w-full text-center">
+        <p className="bg-yellow-300 py-2 font-semibold">
+        ⚠️ A brand new portfolio is under construction ⚠️
+        </p>
+      </div>
+      <div className="w-full min-h-screen bg-gradient-to-t from-gray-900 to-gray-600 bg-gradient-to-r pt-16">
+        <div className="flex flex-col justify-center items-center mx-auto w-full px-8 pb-24">
+          <Image
+            className="rounded-full border-slate-100 border-2"
+            alt={data.name}
+            src={data.avatar}
+            width={96}
+            height={96}
+          />
+          <h1 className="font-semibold text-slate-100 mt-4 text-xl mb-4">
+            @{data.name}
+          </h1>
+          {/* Work & Socials Section */}
+          <Section title="Work & Socials" />
+          {data.links.map((link: any) => (
+            <SocialLinkCard key={link.href} {...link} />
+          ))}
+          {/* Projects Section */}
+          <Section title="Projects" />
+          {data.projects.map((project: Project) => (
+            <ProjectLinkCard key={project.href} {...project} />
+          ))}
+          {/* Social Icons */}
+          {/* <div className="flex items-center gap-1 mt-4">
           {data.socials.map((social:any) => {
             if (social.href.includes("twitter")) {
               return (
@@ -210,7 +220,8 @@ export default async function HomePage() {
             }
           })}
         </div> */}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
